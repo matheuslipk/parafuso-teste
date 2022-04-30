@@ -1,12 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+import { createGlobalStyle } from 'styled-components'
+import { COLORS } from './utils/constants'
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    background-color: ${COLORS.background};
+  }
+`
+
+export default GlobalStyle
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 )
 root.render(
   <React.StrictMode>
+    <GlobalStyle />
     <App />
   </React.StrictMode>
 )
