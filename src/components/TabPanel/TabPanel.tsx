@@ -2,7 +2,7 @@ import React from 'react'
 import { TabPanelContainer } from './TabPanel.style'
 
 interface TabProps {
-  children?: string
+  children?: any
   index: number
   value: number
 }
