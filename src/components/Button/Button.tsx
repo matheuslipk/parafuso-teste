@@ -1,3 +1,4 @@
+import React from 'react'
 import { ButtonContainer } from './Button.styles'
 
 interface ButtonProps {
@@ -5,11 +6,13 @@ interface ButtonProps {
   disabled?: boolean
   color?: 'success' | 'purple'
   outline?: boolean
+  onClick?: () => any
+  style?: React.CSSProperties
 }
 
-export const Button = ({ label, disabled, color, outline }:ButtonProps) => {
+export const Button = ({ label, color, outline, ...others }:ButtonProps) => {
   return (
-    <ButtonContainer disabled={disabled} data-color={color} data-outline={outline}>
+    <ButtonContainer data-color={color} data-outline={outline} {...others}>
       {label}
     </ButtonContainer>
   )

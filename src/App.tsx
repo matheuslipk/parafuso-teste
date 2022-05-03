@@ -1,9 +1,9 @@
 import React from 'react'
-import { Entrance } from './views/Entrance'
+import { MyRoutes } from './routers/Routes'
 
 function App () {
   return (
-    <Entrance />
+    <MyRoutes />
   )
 }
 

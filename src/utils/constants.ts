@@ -1,14 +1,15 @@
 export const COLORS = {
-  primary: '#72cede',
-  yellow100: '#fefce9',
-  background: '#f2f2f2',
-  disabled: '#dadada',
+  primary: '#4DD0E1',
+  yellow100: '#FFFBE6',
+  background: '#F2F2F2',
+  disabled: '#DADADA',
   gray500: '#cccccc',
-  grayText: '#9b9b9b',
+  grayText: '#9B9B9B',
   white: '#ffffff',
-  black: '#12251d',
-  success: '#6ad997',
-  purple: '#9e6dae'
+  black: '#0A261D',
+  success: '#28DD91',
+  purple: '#A769B2',
+  redError: '#FF0068'
 }
 
 export const HEIGHTS = {
