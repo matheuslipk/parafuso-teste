@@ -15,6 +15,24 @@ export const ButtonContainer = styled.button`
   `}
 
   ${(props:any) => {
+    if (props['data-color'] === 'primary' && props['data-outline']) {
+      return `
+        background-color: ${COLORS.white};
+        color: ${COLORS.primary};
+        border-color: ${COLORS.primary};
+      `
+    }
+
+    if (props['data-color'] === 'primary') {
+      return `
+      background-color: ${COLORS.primary};
+      color: ${COLORS.white};
+      border: none;
+      `
+    }
+  }}
+
+  ${(props:any) => {
     if (props['data-color'] === 'purple' && props['data-outline']) {
       return `
         background-color: ${COLORS.white};

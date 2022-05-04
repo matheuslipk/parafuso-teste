@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     color: ${COLORS.grayText};
+    font-family: "Open Sans";
   }
   body {
     background-color: ${COLORS.background};

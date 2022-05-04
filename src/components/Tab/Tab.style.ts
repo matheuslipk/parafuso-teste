@@ -16,7 +16,7 @@ export const TabContainer = styled.div`
     flex: 1;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1rem;
     ${(props:any) => props['data-active'] && `color: ${COLORS.primary}`};
   }
 `

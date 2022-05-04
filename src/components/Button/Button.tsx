@@ -4,7 +4,7 @@ import { ButtonContainer } from './Button.styles'
 interface ButtonProps {
   label?: string
   disabled?: boolean
-  color?: 'success' | 'purple'
+  color?: 'success' | 'purple' | 'primary'
   outline?: boolean
   onClick?: () => any
   style?: React.CSSProperties

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Header } from '../components/Header/Header'
 import { Tabs } from '../components/Tabs/Tabs'
 import { Tab } from '../components/Tab/Tab'
@@ -19,6 +20,9 @@ export const Entrance = () => {
   const [plate, setPlate] = React.useState('')
   const [showModal, setShowModal] = React.useState(false)
   const [statusLoading, setStatusLoading] = React.useState<StatusLoadingInterface>(null)
+  const [messageModal, setMessageModal] = React.useState('')
+
+  const navigate = useNavigate()
 
   const handleChangeTab = (tab:number) => {
     setTab(tab)
@@ -34,13 +38,16 @@ export const Entrance = () => {
   const handleSetEntrance = () => {
     setShowModal(true)
     setStatusLoading('loading')
+    setMessageModal('Registrando...')
 
     apiService.setParkingEntrance(plate)
       .then(() => {
         setStatusLoading('done')
+        setMessageModal('REGISTRANDO!')
       })
-      .catch(() => {
+      .catch((e:any) => {
         setStatusLoading('error')
+        setMessageModal(e.errors?.plate?.[0] || 'Erro!')
       })
       .finally(() => setTimeout(() => {
         setShowModal(false)
@@ -49,15 +56,47 @@ export const Entrance = () => {
   }
 
   const handleSetParkingOut = () => {
+    setShowModal(true)
+    setStatusLoading('loading')
+    setMessageModal('Confirmando...')
+
     apiService.setParkingOut(plate)
+      .then(() => {
+        setStatusLoading('done')
+        setMessageModal('SAÍDA LIBERADA')
+      })
+      .catch((e:any) => {
+        setStatusLoading('error')
+        setMessageModal(e.errors?.plate?.[0] || 'Erro!')
+      })
+      .finally(() => setTimeout(() => {
+        setShowModal(false)
+        setStatusLoading(null)
+      }, 2000))
   }
 
   const handleParkingPayment = () => {
+    setShowModal(true)
+    setStatusLoading('loading')
+    setMessageModal('Confirmando...')
+
     apiService.setParkingPayment(plate)
+      .then(() => {
+        setStatusLoading('done')
+        setMessageModal('PAGO!')
+      })
+      .catch((e:any) => {
+        setStatusLoading('error')
+        setMessageModal(e.errors?.plate?.[0] || 'Erro!')
+      })
+      .finally(() => setTimeout(() => {
+        setShowModal(false)
+        setStatusLoading(null)
+      }, 2000))
   }
 
   const handleGetHistoryByPlate = () => {
-    apiService.getHistoryByPlate(plate)
+    navigate(`history/${plate}`)
   }
 
   return (
@@ -97,18 +136,19 @@ export const Entrance = () => {
           style={{ marginTop: 10 }}
         />
          <Button
-          label='Ver Histórico'
-          color='purple'
+          disabled={!isValidPlate}
+          label='VER HISTÓRICO'
+          color='primary'
           outline
           onClick={handleGetHistoryByPlate}
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 10, border: 'none' }}
         />
       </TabPanel>
       {showModal && (
         <Modal>
-          {statusLoading === 'loading' && <Loading text='Registrando...' />}
-          {statusLoading === 'done' && <Confirm text='REGISTRADO!' />}
-          {statusLoading === 'error' && <Warning text='Erro!' />}
+          {statusLoading === 'loading' && <Loading text={messageModal} />}
+          {statusLoading === 'done' && <Confirm text={messageModal} />}
+          {statusLoading === 'error' && <Warning text={messageModal} />}
         </Modal>
       )}
     </div>
