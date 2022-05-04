@@ -21,5 +21,10 @@ module.exports = {
   ],
   rules: {
     'react/react-in-jsx-scope': 'off'
+  },
+  globals: {
+    test: 'readonly',
+    describe: 'readonly',
+    expect: 'readonly'
   }
 }
