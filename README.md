@@ -8,4 +8,4 @@ NodeJS versão 14.x ou superior
 
 ## Visualizar o projeto em produção
 Para facilitar a visualização do projeto finalizado, ele ja esta disponivel no link abaixo:   
-https://jocular-hamster-1361f0.netlify.app/history/AAA-1234
+https://jocular-hamster-1361f0.netlify.app
