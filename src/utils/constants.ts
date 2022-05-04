@@ -16,3 +16,5 @@ export const HEIGHTS = {
   input: 60,
   button: 60
 }
+
+export const MAX_WIDTH = 800

@@ -3,8 +3,11 @@ import { COLORS } from '../../utils/constants'
 
 export const List = styled.ul`
   display: flex;
+  background-color: ${COLORS.white};
   flex-direction: column;
   padding: 10px 20px;
+  margin: 10px 0;
+  border-radius: 4px;
 `
 
 export const ListItem = styled.li`
@@ -30,5 +33,15 @@ export const ListItem = styled.li`
       font-size: 1.5rem;
       color: ${COLORS.black};
     }
+  }
+`
+
+export const PlateText = styled.h3`
+  font-size: 1.5rem;
+  color: ${COLORS.primary};
+
+  img {
+    margin-right: 10px;
+    cursor: pointer;
   }
 `

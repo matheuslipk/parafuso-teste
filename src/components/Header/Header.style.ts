@@ -6,7 +6,7 @@ export const HeaderContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   background-color: ${COLORS.primary};
-  min-height: 80px;
+  min-height: 60px;
   display: flex;
   padding: 0 20px;
 

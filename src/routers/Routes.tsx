@@ -4,7 +4,7 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
-import { Entrance } from '../views/Entrance'
+import { Entrance } from '../views/Entrance/Entrance'
 import { Histoty } from '../views/History/History'
 
 export const MyRoutes = () => {

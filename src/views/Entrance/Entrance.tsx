@@ -1,17 +1,18 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Header } from '../components/Header/Header'
-import { Tabs } from '../components/Tabs/Tabs'
-import { Tab } from '../components/Tab/Tab'
-import { TabPanel } from '../components/TabPanel/TabPanel'
-import { PlateInput } from '../components/PlateInput/PlateInput'
-import { Button } from '../components/Button/Button'
-import { formatPlate } from '../utils/helpers'
-import * as apiService from '../services/apiService'
-import { Modal } from '../components/Modal/Modal'
-import { Loading } from '../components/Loading/Loading'
-import { Confirm } from '../components/Confirm/Confirm'
-import { Warning } from '../components/Warning/Warning'
+import { Header } from '../../components/Header/Header'
+import { Tabs } from '../../components/Tabs/Tabs'
+import { Tab } from '../../components/Tab/Tab'
+import { TabPanel } from '../../components/TabPanel/TabPanel'
+import { PlateInput } from '../../components/PlateInput/PlateInput'
+import { Button } from '../../components/Button/Button'
+import { formatPlate } from '../../utils/helpers'
+import * as apiService from '../../services/apiService'
+import { Modal } from '../../components/Modal/Modal'
+import { Loading } from '../../components/Loading/Loading'
+import { Confirm } from '../../components/Confirm/Confirm'
+import { Warning } from '../../components/Warning/Warning'
+import { WrapBodyContainer } from '../../components/WrapBody/WrapBody.styles'
 
 type StatusLoadingInterface = 'loading' | 'error' | 'done' | null
 
@@ -102,48 +103,52 @@ export const Entrance = () => {
   return (
     <div>
       <Header />
-      <Tabs>
-        <Tab isActive={tab === 0} onClick={() => handleChangeTab(0)} label='Entrada' />
-        <Tab isActive={tab === 1} onClick={() => handleChangeTab(1)} label='Saída' />
-      </Tabs>
+      <WrapBodyContainer>
 
-      <TabPanel value={tab} index={0}>
-        <label>Número da placa:</label>
-        <PlateInput value={plate} onChange={handleChangePlate} placeholder="AAA-0000" />
-        <Button
-          onClick={handleSetEntrance}
-          disabled={!isValidPlate}
-          label='CONFIRMAR ENTRADA'
-          color='success'
-        />
-      </TabPanel>
+        <Tabs>
+          <Tab isActive={tab === 0} onClick={() => handleChangeTab(0)} label='Entrada' />
+          <Tab isActive={tab === 1} onClick={() => handleChangeTab(1)} label='Saída' />
+        </Tabs>
 
-      <TabPanel value={tab} index={1}>
-        <label>Número da placa:</label>
-        <PlateInput value={plate} onChange={handleChangePlate} placeholder="AAA-0000" />
-        <Button
-          disabled={!isValidPlate}
-          label='PAGAMENTO'
-          color='purple'
-          onClick={handleParkingPayment}
-        />
-        <Button
-          disabled={!isValidPlate}
-          label='SAÍDA'
-          color='purple'
-          outline
-          onClick={handleSetParkingOut}
-          style={{ marginTop: 10 }}
-        />
-         <Button
-          disabled={!isValidPlate}
-          label='VER HISTÓRICO'
-          color='primary'
-          outline
-          onClick={handleGetHistoryByPlate}
-          style={{ marginTop: 10, border: 'none' }}
-        />
-      </TabPanel>
+        <TabPanel value={tab} index={0}>
+          <label>Número da placa:</label>
+          <PlateInput value={plate} onChange={handleChangePlate} placeholder="AAA-0000" />
+          <Button
+            onClick={handleSetEntrance}
+            disabled={!isValidPlate}
+            label='CONFIRMAR ENTRADA'
+            color='success'
+          />
+        </TabPanel>
+
+        <TabPanel value={tab} index={1}>
+          <label>Número da placa:</label>
+          <PlateInput value={plate} onChange={handleChangePlate} placeholder="AAA-0000" />
+          <Button
+            disabled={!isValidPlate}
+            label='PAGAMENTO'
+            color='purple'
+            onClick={handleParkingPayment}
+          />
+          <Button
+            disabled={!isValidPlate}
+            label='SAÍDA'
+            color='purple'
+            outline
+            onClick={handleSetParkingOut}
+            style={{ marginTop: 10 }}
+          />
+          <Button
+            disabled={!isValidPlate}
+            label='VER HISTÓRICO'
+            color='primary'
+            outline
+            onClick={handleGetHistoryByPlate}
+            style={{ marginTop: 10, border: 'none' }}
+          />
+        </TabPanel>
+
+      </WrapBodyContainer>
       {showModal && (
         <Modal>
           {statusLoading === 'loading' && <Loading text={messageModal} />}
