@@ -13,8 +13,9 @@ import { Loading } from '../../components/Loading/Loading'
 import { Confirm } from '../../components/Confirm/Confirm'
 import { Warning } from '../../components/Warning/Warning'
 import { WrapBodyContainer } from '../../components/WrapBody/WrapBody.styles'
+import { HeaderModalText, ModalContentPayment, PlatePaymentText } from './Entrance.styles'
 
-type StatusLoadingInterface = 'loading' | 'error' | 'done' | null
+type StatusLoadingInterface = 'loading' | 'error' | 'done' | 'confirmPayment' | 'confirmOut' | null
 
 export const Entrance = () => {
   const [tab, setTab] = React.useState(0)
@@ -22,7 +23,7 @@ export const Entrance = () => {
   const [showModal, setShowModal] = React.useState(false)
   const [statusLoading, setStatusLoading] = React.useState<StatusLoadingInterface>(null)
   const [messageModal, setMessageModal] = React.useState('')
-
+  const timerModal = 1500
   const navigate = useNavigate()
 
   const handleChangeTab = (tab:number) => {
@@ -53,47 +54,61 @@ export const Entrance = () => {
       .finally(() => setTimeout(() => {
         setShowModal(false)
         setStatusLoading(null)
-      }, 2000))
+      }, timerModal))
   }
 
-  const handleSetParkingOut = () => {
+  const handleSetParkingOut = (confirm = false) => {
     setShowModal(true)
-    setStatusLoading('loading')
-    setMessageModal('Confirmando...')
+    const setParkingOut = () => {
+      setStatusLoading('loading')
+      setMessageModal('Confirmando...')
 
-    apiService.setParkingOut(plate)
-      .then(() => {
-        setStatusLoading('done')
-        setMessageModal('SAÍDA LIBERADA')
-      })
-      .catch((e:any) => {
-        setStatusLoading('error')
-        setMessageModal(e.errors?.plate?.[0] || 'Erro!')
-      })
-      .finally(() => setTimeout(() => {
-        setShowModal(false)
-        setStatusLoading(null)
-      }, 2000))
+      apiService.setParkingOut(plate)
+        .then(() => {
+          setStatusLoading('done')
+          setMessageModal('SAÍDA LIBERADA')
+        })
+        .catch((e:any) => {
+          setStatusLoading('error')
+          setMessageModal(e.errors?.plate?.[0] || 'Erro!')
+        })
+        .finally(() => setTimeout(() => {
+          setShowModal(false)
+          setStatusLoading(null)
+        }, timerModal))
+    }
+    if (confirm) {
+      setParkingOut()
+      return
+    }
+    setStatusLoading('confirmOut')
   }
 
-  const handleParkingPayment = () => {
+  const handleParkingPayment = (confirm = false) => {
     setShowModal(true)
-    setStatusLoading('loading')
-    setMessageModal('Confirmando...')
+    const setPayment = () => {
+      setStatusLoading('loading')
+      setMessageModal('Confirmando...')
 
-    apiService.setParkingPayment(plate)
-      .then(() => {
-        setStatusLoading('done')
-        setMessageModal('PAGO!')
-      })
-      .catch((e:any) => {
-        setStatusLoading('error')
-        setMessageModal(e.errors?.plate?.[0] || 'Erro!')
-      })
-      .finally(() => setTimeout(() => {
-        setShowModal(false)
-        setStatusLoading(null)
-      }, 2000))
+      apiService.setParkingPayment(plate)
+        .then(() => {
+          setStatusLoading('done')
+          setMessageModal('PAGO!')
+        })
+        .catch((e:any) => {
+          setStatusLoading('error')
+          setMessageModal(e.errors?.plate?.[0] || 'Erro!')
+        })
+        .finally(() => setTimeout(() => {
+          setShowModal(false)
+          setStatusLoading(null)
+        }, 2000))
+    }
+    if (confirm) {
+      setPayment()
+      return
+    }
+    setStatusLoading('confirmPayment')
   }
 
   const handleGetHistoryByPlate = () => {
@@ -128,14 +143,14 @@ export const Entrance = () => {
             disabled={!isValidPlate}
             label='PAGAMENTO'
             color='purple'
-            onClick={handleParkingPayment}
+            onClick={() => handleParkingPayment(false)}
           />
           <Button
             disabled={!isValidPlate}
             label='SAÍDA'
             color='purple'
             outline
-            onClick={handleSetParkingOut}
+            onClick={() => handleSetParkingOut(false)}
             style={{ marginTop: 10 }}
           />
           <Button
@@ -154,6 +169,36 @@ export const Entrance = () => {
           {statusLoading === 'loading' && <Loading text={messageModal} />}
           {statusLoading === 'done' && <Confirm text={messageModal} />}
           {statusLoading === 'error' && <Warning text={messageModal} />}
+          {statusLoading === 'confirmPayment' && (
+            <ModalContentPayment>
+              <HeaderModalText>Confirma o pagamento do veículo da placa abaixo?</HeaderModalText>
+              <PlatePaymentText>{plate}</PlatePaymentText>
+              <Button onClick={() => handleParkingPayment(true)} label='CONFIRMAR' color='purple' />
+              <Button
+                disabled={!isValidPlate}
+                label='VOLTAR'
+                color='primary'
+                outline
+                onClick={() => setShowModal(false)}
+                style={{ border: 'none' }}
+              />
+            </ModalContentPayment>
+          )}
+          {statusLoading === 'confirmOut' && (
+            <ModalContentPayment>
+              <HeaderModalText>Confirma a saída do veículo da placa abaixo?</HeaderModalText>
+              <PlatePaymentText>{plate}</PlatePaymentText>
+              <Button onClick={() => handleParkingPayment(true)} label='CONFIRMAR' color='purple' />
+              <Button
+                disabled={!isValidPlate}
+                label='VOLTAR'
+                color='primary'
+                outline
+                onClick={() => setShowModal(false)}
+                style={{ border: 'none' }}
+              />
+            </ModalContentPayment>
+          )}
         </Modal>
       )}
     </div>
