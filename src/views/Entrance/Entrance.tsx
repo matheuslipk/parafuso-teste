@@ -188,7 +188,7 @@ export const Entrance = () => {
             <ModalContentPayment>
               <HeaderModalText>Confirma a saída do veículo da placa abaixo?</HeaderModalText>
               <PlatePaymentText>{plate}</PlatePaymentText>
-              <Button onClick={() => handleParkingPayment(true)} label='CONFIRMAR' color='purple' />
+              <Button onClick={() => handleSetParkingOut(true)} label='CONFIRMAR' color='purple' />
               <Button
                 disabled={!isValidPlate}
                 label='VOLTAR'

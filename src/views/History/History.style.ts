@@ -14,9 +14,9 @@ export const ListItem = styled.li`
   display: flex;
   flex-direction: row;
   border: 1px solid;
-  margin-bottom: 8px;
+  margin-top: 8px;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 2px 2px rgba(0,0,0,0.2);
   justify-content: space-between;
 
